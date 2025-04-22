@@ -38,8 +38,8 @@ def add_car():
             return jsonify(result.fetchone()._asdict())
         return jsonify({"message": "Error"})
     
-@app.route("/api/car/<id>", methods=["DELETE"])
-def car(id: int):
+@app.route("/api/car/<int:id>", methods=["DELETE"])
+def delete_car(id):
     if request.method == "DELETE":
         with engine.connect() as connection:
             query = text("DELETE FROM cars WHERE id = :id;")

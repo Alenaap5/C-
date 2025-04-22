@@ -16,9 +16,9 @@ async function render_cars() {
         + '<td><img src="{КАРТИНКА}" width="50px" class="img-fluid rounded-start" alt="..."></td>'
         + '<td>{МАРКА}</td>'
         + '<td>{ХАРАКТЕРИСТИКИ АВТОМОБИЛЯ}</td>'
-        + '<td>{ЦЕНА} Р</td>'
+        + '<td>{ЦЕНА}</td>'
         + '<td>'
-        +  '<button class="btn btn-danger" onclik = "delete_car({ИД})">🗑️</button>' 
+        +  '<button class="btn btn-danger" onclick = "delete_car({ИД})">🗑️</button>' 
         + '</td>'
     + '</tr>'
     let cars = await get_cars()
@@ -32,5 +32,16 @@ async function render_cars() {
         car = car.replace("{КАРТИНКА}", element.photo)
         container.innerHTML += car
     })
+}
+
+
+async function delete_car({id}){
+    let response = await fetch('http://localhost:8000/api/car/${id}', {method: "DELETE"});
+    if (response.ok) {
+           window.location.reload(false);
+    } else { 
+        alert ("Ошибка HTTP: " + response.status)
+    }
+    
 }
 render_cars()
